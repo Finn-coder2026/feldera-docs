@@ -244,7 +244,5 @@ Feldera supports the following authentication providers:
 Each authentication provider requires specific configuration. Choose your provider below:
 
 ```mdx-code-block
-import DocCardList from '@theme/DocCardList';
 
-<DocCardList />
 ```

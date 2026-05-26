@@ -1,7 +1,5 @@
 # Formats: Specify the shape of the data
 
 ```mdx-code-block
-import DocCardList from '@theme/DocCardList';
 
-<DocCardList />
 ```

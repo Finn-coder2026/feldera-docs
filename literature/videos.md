@@ -4,17 +4,11 @@
 
 Mihai Budiu, EventCentric, June 2025
 
-<LiteYouTubeEmbed id="L0yoGhxj7Rw" />
-
 ## Get Results from Your Graph Data with Feldera, June 2025
-
-<LiteYouTubeEmbed id="vpVAZbaZ2Hg" />
 
 ## DBSP: Incremental Computation on Streams and Its Applications to Databases
 
 Mihai Budiu, Carnegie Mellon Seminar on Databases, May 2025
-
-<LiteYouTubeEmbed id="omOHjFLhrQU" />
 
 ## Streaming, incremental, finite-memory computations in SQL over unbounded streams
 
@@ -22,29 +16,18 @@ Mihai Budiu, Calcite Meetup, February 2024
 
 Presentation starts at `36:50`
 
-<LiteYouTubeEmbed id="PHm5vZ1A43I" />
-
 ## Incremental View Maintenance in Feldera
 
 Gerd Zellweger, Webinar, April 2025
-
-<LiteYouTubeEmbed id="rcq3vqcSLeY" />
 
 ## Recursive SQL & Building Interactive Web Applications
 
 Gerd Zellweger, Webinar, January 2024
 
-<LiteYouTubeEmbed id="ROa4duVqoOs" />
-
 ## DBSP: A unified (practical) theory of databases, streams, and incremental computation
 
 Mihai Budiu, Simons Institute Industry Day, Berkeley, November 2023
 
-<LiteYouTubeEmbed id="aiGXya43Ft8" />
-
 ## Building a streaming incremental view maintenance engine with Calcite
 
 Mihai Budiu, Calcite Meetup, March 2023
-
-<LiteYouTubeEmbed id="iT4k5DCnvPU" />
-

@@ -1,14 +1,7 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Mutually-Recursive Queries
-
-:::warning
 
 Recursive queries are a new feature in Feldera SQL and are still evolving. Syntax and
 functionality may change in future versions.
-
-:::
 
 Recursive computations are notoriously limited in standard SQL due to cumbersome syntax and limited expressivity.
 Feldera SQL introduces an intuitive and powerful syntax for recursive queries that:
@@ -145,8 +138,7 @@ so there’s no intermediate output in the change stream. This can make debuggin
 To debug, you can use a [a UDF](/sql/udf). For example, modify the previous example to use a Rust function that
 prints each invocation of the fibonacci view during recursion:
 
-<Tabs>
-  <TabItem value="program.sql" label="program.sql" default>
+  
     ```sql
     create function logger(n int not null, value int not null) returns int not null;
     declare recursive view fibonacci(n int not null, value int not null);
@@ -171,21 +163,19 @@ prints each invocation of the fibonacci view during recursion:
 
     create view fib_outputs as select * from fibonacci;
     ```
-  </TabItem>
-  <TabItem value="udf.toml" label="udf.toml">
+
+  
     ```toml
     log = "0.4"
     ```
-  </TabItem>
-  <TabItem value="udf.rs" label="udf.rs">
+
+  
     ```rust
     pub fn logger(n: i32, v: i32) -> Result<i32, Box<dyn std::error::Error>> {
         log::info!("n={n} v={v}");
         Ok(n)
     }
     ```
-  </TabItem>
-</Tabs>
 
 If we run the pipeline and inspect the log we now can see the following output before the pipeline crashes:
 

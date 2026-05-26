@@ -29,7 +29,5 @@ with the schema of the tables and views.
 Read the references below to learn more about SQL pipeline features.
 
 ```mdx-code-block
-import DocCardList from '@theme/DocCardList';
 
-<DocCardList />
 ```

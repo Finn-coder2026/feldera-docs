@@ -4,12 +4,11 @@ There are four different ways to interact with Feldera. All methods allow users 
 monitor their performance and interact with materialized tables, views and change streams.
 
 ```mdx-code-block
-import Link from '@docusaurus/Link';
 
 <div className="card">
   <div className="card__body">
     <h3>
-      <Link to="/interface/web-console">Web Console</Link>
+      Web Console
     </h3>
     <p>The Web Console is the most convenient starting point to using Feldera. Simply aim your web browser at a running Feldera instance (and authenticate if required). This is typically `127.0.0.1:8080` if you are using our Docker instance or `try.feldera.com` if you are using our public cloud sandbox.</p>
   </div>
@@ -17,7 +16,7 @@ import Link from '@docusaurus/Link';
 <div className="card">
   <div className="card__body">
     <h3>
-      <Link to="/interface/cli">Commandline Interface (`fda`)</Link>
+      Commandline Interface (`fda`)
     </h3>
     <p>`fda` allows users to interact with a Feldera instances from the CLI. It also provides a shell that makes it convenient to issue ad-hoc queries and start/stop pipelines.</p>
   </div>
@@ -25,7 +24,7 @@ import Link from '@docusaurus/Link';
 <div className="card">
   <div className="card__body">
     <h3>
-      <Link to="pathname:///python/">Python SDK</Link>
+      Python SDK
     </h3>
     <p>The Python SDK provides a convenient wrapper around our REST API. It allows you to programmatically define pipelines.</p>
   </div>
@@ -33,7 +32,7 @@ import Link from '@docusaurus/Link';
 <div className="card">
   <div className="card__body">
     <h3>
-      <Link to="/api">REST API</Link>
+      REST API
     </h3>
     <p>All the above methods interact with Feldera using the REST API. This is intended for users who would like to build their own automation to Feldera. `Pipeline` is the most important API type. </p>
   </div>

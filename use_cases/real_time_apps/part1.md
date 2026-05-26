@@ -12,8 +12,6 @@ In this three-part series, we’ll build a real-time, scalable, and incremental 
 
 - Watch the Webinar accompanying this series on Youtube:
 
-<LiteYouTubeEmbed id="ROa4duVqoOs" />
-
 ## Spreadsheets
 
 Spreadsheets are everywhere (Excel, Google Sheets), and this use-case highlights how incremental computation helps with large spreadsheets (billions of cells) and many concurrent users:
@@ -36,9 +34,7 @@ To implement the spreadsheet in Feldera we'll:
 
 Follow along in the Feldera Web-console or run Feldera locally or in our [online sandbox](/get-started). Create a new pipeline named `xls` and paste each SQL and Rust snippet into the Web-console.
 
-:::info
 The code used in this article is available in our [GitHub repository](https://github.com/feldera/techdemo-spreadsheet) in the `feldera` folder. While we’ll walk through each step here, you can also download the repository and follow the instructions in the README to deploy the pipeline.
-:::
 
 ### Storing the Cells in a Table
 
@@ -84,11 +80,9 @@ In the WITH clause:
 * We declare the table as materialized, allowing ad-hoc queries.
 * We use a datagen configuration to insert four cells with IDs 0, 1, 2, 3 and values 41, 1, =B0, and =A0+C0.
 
-:::info
 We’ll use two “coordinate systems” for cells: numeric IDs in the table and spreadsheet coordinates (letters for columns, numbers for rows). For example, B100 is the second column in row 100.
 
 We currently limit columns to `A` through `Z`, covering numeric IDs from `0` to `1_040_000_000`. Thus, `A0` maps to cell id `0`, `Z0 → 25`, `A1 → 26`, and `Z39999999` → `1_040_000_000-1`.
-:::
 
 The four cells we added — IDs `0`, `1`, `2`, `3` — map to `A0`, `B0`, `C0`, and `D0`. When the pipeline is running, they should compute to `41`, `1`, `1`, and `42` respectively.
 
@@ -134,9 +128,9 @@ use chrono::DateTime;
 
 // Returns a list of references for a spreadsheet formula
 // `42 -> []` `=A0 -> [0]`, `=A0+B0 -> [0, 1]`
-pub fn mentions(raw_content: Option<String>) -> Result<Option<Vec<Option<i64>>>, Box<dyn std::error::Error>> {
+pub fn mentions(raw_content: Option) -> Result<Option<Vec<Option<i64>>>, Box<dyn std::error::Error>> {
     let cell_content = raw_content.unwrap_or_else(|| String::new());
-    let formula = parse_formula::parse_string_to_formula(&cell_content, None::<NoCustomFunction>);
+    let formula = parse_formula::parse_string_to_formula(&cell_content, None::);
 
     let mut formulas = VecDeque::from(vec![formula]);
     let mut references = vec![];
@@ -209,8 +203,6 @@ Once the UDF is in place, we can run the pipeline, activate the changestream for
 
 Notice null appears in every mentions array. This ensures the array isn’t empty for cells that don’t reference anything, preventing them from being excluded in future joins.
 
-:::info
-
 To see the latest_cells view in action, you can insert a newer value for cell 0:
 
 ```sql
@@ -221,7 +213,6 @@ You should see two changes being emitted in the `latest_cell`
 view, the removal of the cell with value `42` and a new cell with value `0`.
 
 This setup also allows us to easily undo any changes made (by just deleting the most recent entry for a given cell).
-:::
 
 ### Find the values of referenced cells
 
@@ -334,9 +325,9 @@ Below is the Rust code for our `cell_value` UDF (plus helper functions):
 
 ```rust
 // Evaluates a formula "=A0+B0" and returns it's result
-pub fn cell_value(raw_content: Option<String>, mentions_ids: Option<Vec<Option<i64>>>, mentions_values: Option<Vec<Option<String>>>) -> Result<Option<String>, Box<dyn std::error::Error>> {
+pub fn cell_value(raw_content: Option, mentions_ids: Option<Vec<Option<i64>>>, mentions_values: Option) -> Result<Option, Box<dyn std::error::Error>> {
     let cell_content = raw_content.unwrap_or_else(|| String::new());
-    let formula = parse_formula::parse_string_to_formula(&*cell_content, None::<NoCustomFunction>);
+    let formula = parse_formula::parse_string_to_formula(&*cell_content, None::);
 
     let mentions_ids = mentions_ids.unwrap_or_else(|| vec![]);
     let mentions_values = mentions_values.unwrap_or_else(|| vec![]);
@@ -482,7 +473,6 @@ Finally, let's confirm our incremental update promise: changing a single cell sh
 
 We can test this by updating cell 0 again:
 
-
 ```sql
 insert into spreadsheet_data values (0, 0, '2025-01-01T00:00:00', '0', 0)
 ```
@@ -500,6 +490,4 @@ Checking the `spreadsheet_view` changestream, we see just two cells affected:
 
 We’ve now built the core of our spreadsheet application. In [the next part](./part2.md) of this series, we’ll explore how to use Feldera’s API to serve this spreadsheet to clients, creating a publicly accessible API server.
 
-:::info
 If you compare the code in this article it with the code in the [repository](https://github.com/feldera/techdemo-spreadsheet/tree/main/feldera) you'll find that we omitted two additional views (to track API limits and statistics) for brevity.
-:::
