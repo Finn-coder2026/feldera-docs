@@ -1,0 +1,9 @@
+{
+  "$schema": "https://jolli.ai/schemas/site-config.json",
+  "title": "test001",
+  "description": "test001 documentation",
+  "nav": [],
+  "theme": {
+    "pack": "forge"
+  }
+}
