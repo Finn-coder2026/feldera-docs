@@ -1,5 +1,6 @@
 # Confluent JDBC output connector
 赵客缦胡缨
+银鞍照白马
 :::note
 This page describes configuration options specific to integration with the Confluent JDBC sink connector.
 See [top-level connector documentation](/connectors/) for general information
