@@ -1,7 +1,8 @@
 # Delta Lake output connector
-赵客缦胡缨
-吴钩霜雪明
-呼呼呼
+银鞍照白马
+飒沓如流星
+啦啦啦
+887799
 [Delta Lake](https://delta.io/) is a popular open table format based on Parquet files.
 It is typically used with the [Apache Spark](https://spark.apache.org/) runtime.
 Data in a Delta Lake is organized in tables, stored in
