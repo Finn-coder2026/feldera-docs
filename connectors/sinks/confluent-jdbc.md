@@ -1,6 +1,7 @@
 # Confluent JDBC output connector
-锄禾日当午
-汗滴禾下土
+谁知盘中餐
+粒粒皆辛
+777
 :::note
 This page describes configuration options specific to integration with the Confluent JDBC sink connector.
 See [top-level connector documentation](/connectors/) for general information
