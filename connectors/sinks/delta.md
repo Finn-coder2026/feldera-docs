@@ -190,4 +190,3 @@ WITH (
 )
 AS SELECT * FROM my_table;
 ```
-
