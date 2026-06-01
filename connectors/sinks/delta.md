@@ -1,5 +1,6 @@
 # Delta Lake output connector
-忽如一夜春风来
+
+千树万树梨花开  
 [Delta Lake](https://delta.io/) is a popular open table format based on Parquet files.
 It is typically used with the [Apache Spark](https://spark.apache.org/) runtime.
 Data in a Delta Lake is organized in tables, stored in
@@ -23,10 +24,12 @@ into table records with additional metadata columns that describe the type and o
 of operations. Specifically, the connector adds the following columns to the output
 Delta table:
 
-| Column         | Type      | Description                                                                   |
-|----------------|-----------|-------------------------------------------------------------------------------|
-| `__feldera_op` | `VARCHAR` | Operation that this record represents: `i` for "insert", `d` for "delete", or `u` for "update".  |
+
+| Column         | Type      | Description                                                                                                                                       |
+| -------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `__feldera_op` | `VARCHAR` | Operation that this record represents: `i` for "insert", `d` for "delete", or `u` for "update".                                                   |
 | `__feldera_ts` | `BIGINT`  | Timestamp of the update, used to establish the order of updates. Updates with smaller timestamps are applied before those with larger timestamps. |
+
 
 Effectively, we treat the table as a change log, where every record corresponds to
 either an insert or delete operation. The user can run a periodic Spark job to
@@ -69,18 +72,20 @@ MERGE INTO {target_table} AS target
 
 ## Delta Lake output connector configuration
 
-| Parameter  | Description |
-|------------|------------|
-| `uri`*     | Table URI, e.g., `"s3://feldera-fraud-detection-data/feature_train"`. |
-| `mode`*    | Determines how the Delta table connector handles an existing table at the target location. Options: |
-|            | - `append`: New updates will be appended to the existing table at the target location. If the table doesn't exist, it will be created. |
-|            | - `truncate`: Existing table at the specified location will be truncated on the first pipeline start. When the pipeline resumes from a checkpoint the table is kept as-is so that data written before the restart is preserved. |
-|            | - `error_if_exists`: If a table exists at the specified location, the operation will fail. When the pipeline resumes from a checkpoint the existing table is opened without error. |
-| `checkpoint_interval` | <p>Checkpoint interval (i.e., the number of commits after which a new checkpoint should be created) for newly created Delta tables.</p><p>The option is only available when creating the Delta table (`mode = append` and there is no existing table at the target location or `mode = truncate`). It configures the `checkpointInterval` table property, which determines the number of commits after which a new checkpoint should be created.</p><p>0 means no checkpoints are created.</p><p>Default: 10.</p>|
-| `log_retention_duration` | <p>Log retention duration for newly created Delta tables.</p><p>Configures the `delta.logRetentionDuration` table property, which controls how long the table's transaction-log history is kept.  Each time a checkpoint is written, Delta Lake automatically cleans up log entries older than this interval (subject to `enable_expired_log_cleanup`).</p><p>The option is only available when creating the Delta table (`mode = append` and there is no existing table at the target location, or `mode = truncate`).</p><p>The value follows the Delta Lake interval syntax `"interval <N> <unit>"`, where `<unit>` is one of `nanosecond[s]`, `microsecond[s]`, `millisecond[s]`, `second[s]`, `minute[s]`, `hour[s]`, `day[s]`, or `week[s]`.  Examples: `"interval 30 days"`, `"interval 6 hours"`.</p><p>Default: `"interval 30 days"` (Delta Lake default).</p>|
+
+| Parameter                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `uri`*                       | Table URI, e.g., `"s3://feldera-fraud-detection-data/feature_train"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `mode`*                      | Determines how the Delta table connector handles an existing table at the target location. Options:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|                              | - `append`: New updates will be appended to the existing table at the target location. If the table doesn't exist, it will be created.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|                              | - `truncate`: Existing table at the specified location will be truncated on the first pipeline start. When the pipeline resumes from a checkpoint the table is kept as-is so that data written before the restart is preserved.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|                              | - `error_if_exists`: If a table exists at the specified location, the operation will fail. When the pipeline resumes from a checkpoint the existing table is opened without error.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `checkpoint_interval`        | <p>Checkpoint interval (i.e., the number of commits after which a new checkpoint should be created) for newly created Delta tables.</p><p>The option is only available when creating the Delta table (`mode = append` and there is no existing table at the target location or `mode = truncate`). It configures the `checkpointInterval` table property, which determines the number of commits after which a new checkpoint should be created.</p><p>0 means no checkpoints are created.</p><p>Default: 10.</p>|
+| `log_retention_duration`     | <p>Log retention duration for newly created Delta tables.</p><p>Configures the `delta.logRetentionDuration` table property, which controls how long the table's transaction-log history is kept.  Each time a checkpoint is written, Delta Lake automatically cleans up log entries older than this interval (subject to `enable_expired_log_cleanup`).</p><p>The option is only available when creating the Delta table (`mode = append` and there is no existing table at the target location, or `mode = truncate`).</p><p>The value follows the Delta Lake interval syntax `"interval <N> <unit>"`, where `<unit>` is one of `nanosecond[s]`, `microsecond[s]`, `millisecond[s]`, `second[s]`, `minute[s]`, `hour[s]`, `day[s]`, or `week[s]`.  Examples: `"interval 30 days"`, `"interval 6 hours"`.</p><p>Default: `"interval 30 days"` (Delta Lake default).</p>|
 | `enable_expired_log_cleanup` | <p>Whether to clean up expired log entries when a checkpoint is written.</p><p>Configures the `delta.enableExpiredLogCleanup` table property.  When set to `false`, transaction-log entries are retained indefinitely regardless of `log_retention_duration`.</p><p>The option is only available when creating the Delta table (`mode = append` and there is no existing table at the target location, or `mode = truncate`).</p><p>Default: `true` (Delta Lake default).</p>|
-| `max_retries`|<p>Maximum number of retries for failed Delta Lake operations like writing Parquet files and committing transactions.</p><p>The connector performs retries on several levels: individual S3 operations, Delta Lake transaction commits, and overall operation retries. This setting controls the overall operation retries. When a write to the table fails, because of an S3 timeout or any other reason that was not resolved by lower-level retries, the connector will retry the entire operation.</p><p>When not specified, the connector performs infinite retries. When set to 0, the connector doesn't retry failed operations.</p>|
-| `threads` | Number of parallel threads used by the connector. Increasing this value can improve Delta Lake write throughput by enabling concurrent writes. Default: `1`. |
+| `max_retries`                | <p>Maximum number of retries for failed Delta Lake operations like writing Parquet files and committing transactions.</p><p>The connector performs retries on several levels: individual S3 operations, Delta Lake transaction commits, and overall operation retries. This setting controls the overall operation retries. When a write to the table fails, because of an S3 timeout or any other reason that was not resolved by lower-level retries, the connector will retry the entire operation.</p><p>When not specified, the connector performs infinite retries. When set to 0, the connector doesn't retry failed operations.</p>|
+| `threads`                    | Number of parallel threads used by the connector. Increasing this value can improve Delta Lake write throughput by enabling concurrent writes. Default: `1`. |
+
 
 [*]: Required fields
 
@@ -89,9 +94,9 @@ MERGE INTO {target_table} AS target
 Additional configuration options are defined for specific storage backends.  Refer to
 backend-specific documentation for details:
 
-* [Amazon S3 options](https://docs.rs/object_store/latest/object_store/aws/enum.AmazonS3ConfigKey.html)
-* [Azure Blob Storage options](https://docs.rs/object_store/latest/object_store/azure/enum.AzureConfigKey.html)
-* [Google Cloud Storage options](https://docs.rs/object_store/latest/object_store/gcp/enum.GoogleConfigKey.html)
+- [Amazon S3 options](https://docs.rs/object_store/latest/object_store/aws/enum.AmazonS3ConfigKey.html)
+- [Azure Blob Storage options](https://docs.rs/object_store/latest/object_store/azure/enum.AzureConfigKey.html)
+- [Google Cloud Storage options](https://docs.rs/object_store/latest/object_store/gcp/enum.GoogleConfigKey.html)
 
 ### Views with unique keys
 
@@ -99,8 +104,8 @@ If the SQL view contains a **unique key**—a set of columns that uniquely ident
 
 To enable this optimization:
 
-* Use the `CREATE INDEX` statement to define the unique key on the view.
-* Set the connector's `index` property to reference this index.
+- Use the `CREATE INDEX` statement to define the unique key on the view.
+- Set the connector's `index` property to reference this index.
 
 For more information, see the [documentation on views with unique keys](/connectors/unique_keys#views-with-unique-keys).
 
@@ -187,4 +192,3 @@ WITH (
 )
 AS SELECT * FROM my_table;
 ```
-
