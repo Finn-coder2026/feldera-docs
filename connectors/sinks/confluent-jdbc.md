@@ -1,5 +1,5 @@
 # Confluent JDBC output connector
-这是第一行,我加了点东西
+你好啊
 :::note
 This page describes configuration options specific to integration with the Confluent JDBC sink connector.
 See [top-level connector documentation](/connectors/) for general information
