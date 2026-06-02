@@ -2,15 +2,9 @@
 title: Feldera Enterprise Edition
 sidebar_label: Enterprise Edition
 ---
-
+锄禾日当午
+汗滴禾下土
 Feldera Enterprise brings all the power of our incremental compute platform into your own Kubernetes cluster (cloud or on-prem). It’s designed for production use by teams that need resource efficiency, isolation and resilience for their Pipelines. Below is a high-level summary of the architecture and the extra features.
-锄禾日当午啊啊啊啊
-锄禾地方玩
-这句话很重要
-就是这个意思
-没有我们阿斯兰基督教啊上课来得及阿拉科技大
-撒娇离得很近阿斯卡来得及啊了科技
-撒娇了的哈睡觉了肯定
 <div style={{ textAlign: 'center' }}>
 <img
   src="/img/enterprise-architecture.png"
