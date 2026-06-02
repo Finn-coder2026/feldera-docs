@@ -4,6 +4,10 @@ sidebar_label: Enterprise Edition
 ---
 忽如一夜春风来
 千树万树梨花开
+谁知盘中餐
+
+粒粒皆辛苦
+
 Feldera Enterprise brings all the power of our incremental compute platform into your own Kubernetes cluster (cloud or on-prem). It's designed for production use by teams that need resource efficiency, isolation and resilience for their Pipelines. Below is a high-level summary of the architecture and the extra features.
 <div style={{ textAlign: 'center' }}>
 <img
