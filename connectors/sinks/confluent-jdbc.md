@@ -1,5 +1,9 @@
 # Confluent JDBC output connector
 这是第一行,不允许丢失,谢谢,要保持啊
+
+我是小明  
+你好啊
+
 :::note
 This page describes configuration options specific to integration with the Confluent JDBC sink connector.
 See [top-level connector documentation](/connectors/) for general information
@@ -162,4 +166,3 @@ guaranteed to have unique values.  Failure to choose a unique key may lead to da
 
 * For more details on Avro support in Feldera, please refer to the [Avro Format Documentation](/formats/avro).
 * For more information on configuring Kafka transport, visit the [Kafka Sink Connector Documentation](/connectors/sinks/kafka).
-
